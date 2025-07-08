@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - DisTracker</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f4f6fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #ffffff;
+      padding: 2rem 3rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .login-container img {
+      width: 80px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    .login-container h1 {
+  color: #003366;
+  margin-bottom: 1.5rem;
+  font-size: 2.4rem; /* increased from 1.8rem */
+}
+
+
+    .form-group {
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #444;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: #003366;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .login-btn:hover {
+      background: #002244;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .footer a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <img src="Untitled-1.png" alt="DisTracker Logo" />
+    <h1>DisTracker</h1>
+
+    <form action="HARDWAREPRO.html">
+      <div class="form-group">
+        <label for="userId">User ID (Wristband ID)</label>
+        <input type="text" id="userId" name="userId" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <button class="login-btn" type="submit">Login</button>
+    </form>
+
+    <div class="footer">
+      New user? <a href="/register">Sign up here</a>
+    </div>
+  </div>
+</body>
+</html>

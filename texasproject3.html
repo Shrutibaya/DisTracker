@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DisTraker Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #d0f0ff, #fbe3e8);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(to right, #003366, #005580);
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .logo-container img {
+      height: 48px;
+      width: auto;
+    }
+
+    .logo-container h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2.5rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+    }
+
+    .card h2 {
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      color: #003366;
+      font-weight: 600;
+    }
+
+    .data {
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    .led {
+      font-weight: bold;
+      color: white;
+      padding: 0.4rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+
+    .green { background: #28a745; }
+    .yellow { background: #ffc107; color: #333; }
+    .orange { background: #fd7e14; }
+    .red { background: #dc3545; }
+
+    canvas {
+      width: 100% !important;
+      height: 250px !important;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    .card ul li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 600px) {
+      .logo-container h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="Untitled-1.png" alt="DisTraker Logo" />
+      <h1>DisTraker</h1>
+    </div>
+  </header>
+
+  <div class="dashboard">
+
+    <div class="card">
+      <h2>User & Battery Info</h2>
+      <div class="data">
+        <p><strong>User:</strong> Shruti</p>
+        <p><strong>Wristband ID:</strong> TIPRO-0021</p>
+        <p><strong>Battery:</strong> 🔋 84%</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Focus Score</h2>
+      <div class="data">
+        <p><strong>Current Focus:</strong> 87%</p>
+        <p><strong>Status:</strong> <span class="led green">Focused</span></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Focus Graph (Today)</h2>
+      <canvas id="focusChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Distraction Graph (Today)</h2>
+      <canvas id="distractionChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Weekly Focus vs Distraction</h2>
+      <canvas id="weeklyChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h2>Distraction Monitor</h2>
+      <div class="data">
+        <p><strong>Distractions (last 10 min):</strong> 3</p>
+        <p><strong>LED Level:</strong> <span class="led yellow">YELLOW</span></p>
+        <p><strong>Alerts:</strong></p>
+        <ul>
+          <li>⚠️ Focus drop at 3:45 PM</li>
+          <li>🔋 Battery alert yesterday</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Daily Focus Streak 🔥</h2>
+      <div class="data">
+        <p><strong>Current Streak:</strong> 5 days in a row</p>
+        <p><strong>Longest Streak:</strong> 12 days</p>
+        <p>Keep it going to earn higher rewards!</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Gamification Badge 🏆</h2>
+      <div class="data">
+        <p><strong>Current Badge:</strong> <span class="led green">Focus Master</span></p>
+        <p><strong>Unlocked:</strong> 3 of 5</p>
+        <ul>
+          <li>✅ Focus Apprentice (3-day streak)</li>
+          <li>✅ Consistency Champ (7-day streak)</li>
+          <li>✅ Focus Master (85%+ focus)</li>
+          <li>🔒 Zen Mode (no distraction for 1 hour)</li>
+          <li>🔒 Ultra Focus (10-day streak)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Focus Chart
+    new Chart(document.getElementById('focusChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM'],
+        datasets: [{
+          label: 'Focus Level',
+          data: [60, 72, 85, 80, 70],
+          borderColor: '#007BFF',
+          backgroundColor: 'rgba(0, 123, 255, 0.1)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Distraction Chart
+    new Chart(document.getElementById('distractionChart').getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['9 AM', '10 AM', '11 AM', '12 PM', '1 PM'],
+        datasets: [{
+          label: 'Distractions',
+          data: [2, 1, 3, 0, 4],
+          borderColor: '#dc3545',
+          backgroundColor: 'rgba(220, 53, 69, 0.1)',
+          fill: true,
+          tension: 0.4
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Weekly Focus vs Distraction
+    const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+
+    const gradientFocus = weeklyCtx.createLinearGradient(0, 0, 0, 250);
+    gradientFocus.addColorStop(0, 'rgba(40, 167, 69, 0.9)');
+    gradientFocus.addColorStop(1, 'rgba(40, 167, 69, 0.3)');
+
+    const gradientDistraction = weeklyCtx.createLinearGradient(0, 0, 0, 250);
+    gradientDistraction.addColorStop(0, 'rgba(255, 99, 132, 0.9)');
+    gradientDistraction.addColorStop(1, 'rgba(255, 99, 132, 0.3)');
+
+    new Chart(weeklyCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        datasets: [
+          {
+            label: 'Focus Hours',
+            data: [3, 4.5, 2, 4.2, 5, 2, 1],
+            backgroundColor: gradientFocus,
+            borderRadius: 10,
+            barThickness: 16
+          },
+          {
+            label: 'Distraction Hours',
+            data: [1, 0.5, 1.5, 0.8, 1, 2, 2],
+            backgroundColor: gradientDistraction,
+            borderRadius: 10,
+            barThickness: 16
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: {
+              color: '#333',
+              font: { size: 14, weight: 'bold' }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                return `${ctx.dataset.label}: ${ctx.parsed.y} hrs`;
+              }
+            }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Hours',
+              font: { weight: 'bold' }
+            },
+            ticks: {
+              stepSize: 1,
+              color: '#444'
+            }
+          },
+          x: {
+            ticks: {
+              color: '#444'
+            }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
