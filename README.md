@@ -1,6 +1,6 @@
 📱 DisTrecked – Frontend Web App for DisTracker
 
-Your site is live at https://shrutibaya.github.io/DisTracker/
+This site is live at https://shrutibaya.github.io/DisTracker/
 
 DisTrecked is the front-end web interface developed as part of the DisTracker project — a distraction-monitoring wristband aimed at helping students stay focused in a world full of digital distractions.
 
