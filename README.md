@@ -1,5 +1,7 @@
 📱 DisTrecked – Frontend Web App for DisTracker
 
+Your site is live at https://shrutibaya.github.io/DisTracker/
+
 DisTrecked is the front-end web interface developed as part of the DisTracker project — a distraction-monitoring wristband aimed at helping students stay focused in a world full of digital distractions.
 
 This web app connects to the backend (which integrates with the hardware wristband via BLE) and provides a visual dashboard for users to:
@@ -22,15 +24,6 @@ Bluetooth Communication: Web BLE / linked to mobile backend
 
 Design Focus: Minimal UI, real-time feedback, distraction metrics
 
-
-🔗 Features
-Real-time distraction alerts via BLE
-
-Displays user ID, battery status, focus stats
-
-Syncs with backend ML model that detects distractive app usage
-
-Works silently in the background — no need for constant user interaction
 
 🚀 Project Status
 
